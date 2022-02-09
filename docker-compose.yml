@@ -21,6 +21,7 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
+      - /etc/machine-id:/etc/machine-id:ro
       
   grafana:
     container_name: monitoring-grafana
@@ -41,9 +42,9 @@ services:
     restart: unless-stopped
     volumes:
       # to be modified depending on your needs
-      - /path/to/your/grafana/data:/var/lib/grafana
-      - /path/to/your/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - /path/to/your/grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/etc/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning:/etc/grafana/provisioning
 
   node-exporter:
     container_name: monitoring-node-exporter
@@ -69,8 +70,8 @@ services:
     restart: unless-stopped
     volumes:
       # to be modified depending on your needs
-      - /path/to/your/prometheus/data:/prometheus
-      - /path/to/your/prometheus/config:/etc/prometheus/
+      - ./prometheus/data:/prometheus
+      - ./prometheus:/etc/prometheus/
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
