@@ -10,7 +10,7 @@ services:
     image: zcube/cadvisor:latest
     ipc: shareable
     networks:
-      - rpimonitor_default
+      - monitoring
     privileged: true
     restart: unless-stopped
     security_opt:
@@ -22,29 +22,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
-      
-  grafana:
-    container_name: monitoring-grafana
-    environment:
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
-      - GF_PATHS_DATA=/var/lib/grafana
-      - GF_PATHS_HOME=/usr/share/grafana
-      - GF_PATHS_LOGS=/var/log/grafana
-      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
-      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
-    hostname: rpi-grafana
-    image: grafana/grafana:latest
-    networks:
-      - rpimonitor_default
-    ports:
-      - 3000:3000
-    restart: unless-stopped
-    volumes:
-      # to be modified depending on your needs
-      - ./grafana/data:/var/lib/grafana
-      - ./grafana/etc/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/provisioning:/etc/grafana/provisioning
 
   node-exporter:
     container_name: monitoring-node-exporter
@@ -53,7 +30,7 @@ services:
     hostname: rpi-exporter
     image: prom/node-exporter:latest
     networks:
-      - rpimonitor_default
+      - monitoring
     restart: unless-stopped
 
   prometheus:
@@ -66,7 +43,7 @@ services:
     hostname: rpi-prom
     image: prom/prometheus:latest
     networks:
-      - rpimonitor_default
+      - monitoring
     restart: unless-stopped
     volumes:
       # to be modified depending on your needs
@@ -77,5 +54,5 @@ services:
       - node-exporter:node-exporter
 
 networks:
-  rpimonitor_default:
+  monitoring:
     external: true
