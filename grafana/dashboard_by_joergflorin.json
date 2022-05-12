@@ -73,7 +73,7 @@
   "gnetId": 15120,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1652376905683,
+  "iteration": 1652376905700,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -665,7 +665,7 @@
             "uid": "${DS_PI03}"
           },
           "exemplar": true,
-          "expr": "min((node_filesystem_size_bytes{fstype=~\"ext4\"} - node_filesystem_free_bytes{fstype=~\"ext4\"})/ node_filesystem_size_bytes{fstype=~\"ext4\"})",
+          "expr": "min((node_filesystem_size_bytes{fstype!~\"tmpfs\"} - node_filesystem_free_bytes{fstype!~\"tmpfs\"})/ node_filesystem_size_bytes{fstype!~\"tmpfs\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1103,8 +1103,8 @@
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
+          "displayMode": "table",
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single",
@@ -1119,11 +1119,11 @@
             "uid": "${DS_PI03}"
           },
           "exemplar": true,
-          "expr": "100 - ((node_filesystem_avail_bytes{} * 100) / node_filesystem_size_bytes{})",
+          "expr": "100 - ((node_filesystem_avail_bytes{fstype!~\"tmpfs\",mountpoint!~\"/etc/.*\"} * 100) / node_filesystem_size_bytes{fstype!~\"tmpfs\",mountpoint!~\"/etc/.*\"})",
           "hide": false,
           "instant": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{mountpoint}}",
           "refId": "A"
         }
       ],
@@ -2878,7 +2878,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -2909,6 +2909,6 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "gSmIZQw7z",
-  "version": 13,
+  "version": 16,
   "weekStart": ""
 }
