@@ -73,7 +73,7 @@
   "gnetId": 15120,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1652376905700,
+  "iteration": 1652387063073,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -665,7 +665,7 @@
             "uid": "${DS_PI03}"
           },
           "exemplar": true,
-          "expr": "min((node_filesystem_size_bytes{fstype!~\"tmpfs\"} - node_filesystem_free_bytes{fstype!~\"tmpfs\"})/ node_filesystem_size_bytes{fstype!~\"tmpfs\"})",
+          "expr": "(sum(node_filesystem_size_bytes{fstype!~\"tmpfs\"}) - sum(node_filesystem_free_bytes{fstype!~\"tmpfs\"}))/ sum(node_filesystem_size_bytes{fstype!~\"tmpfs\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2715,7 +2715,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "pi03",
           "value": "pi03"
         },
@@ -2878,7 +2878,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -2909,6 +2909,6 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "gSmIZQw7z",
-  "version": 16,
+  "version": 17,
   "weekStart": ""
 }
