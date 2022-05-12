@@ -29,6 +29,10 @@ services:
       - 9100
     hostname: rpi-exporter
     image: prom/node-exporter:latest
+    volumes:
+      - /:/rootfs:ro
+    command:
+      - "--path.rootfs=/rootfs"
     networks:
       - monitoring
     restart: unless-stopped

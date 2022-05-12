@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "name": "DS_PI03",
+      "label": "pi03",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.4.1"
+      "version": "8.4.6"
     },
     {
       "type": "datasource",
@@ -73,11 +73,15 @@
   "gnetId": 15120,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1645720977890,
+  "iteration": 1652376905683,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Time during which Pi is in operation",
       "fieldConfig": {
         "defaults": {
@@ -130,12 +134,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "time() - node_boot_time_seconds",
@@ -152,6 +156,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Total containers running",
       "fieldConfig": {
         "defaults": {
@@ -207,12 +215,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "count(container_last_seen{instance=~\"$node\",image=~\"(.)+\"})",
@@ -229,6 +237,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
         "defaults": {
@@ -290,12 +302,12 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(process_cpu_seconds_total[$interval])) * 100",
@@ -312,6 +324,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Non available RAM memory",
       "fieldConfig": {
         "defaults": {
@@ -365,12 +381,12 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "((container_memory_MemTotal_bytes - container_memory_MemFree_bytes) / (container_memory_MemTotal_bytes )) * 100",
@@ -385,7 +401,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "100 - ((node_memory_MemAvailable_bytes * 100) / node_memory_MemTotal_bytes)",
@@ -402,6 +418,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Used Swap",
       "fieldConfig": {
         "defaults": {
@@ -463,12 +483,12 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "(node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes) / node_memory_SwapTotal_bytes * 100 ",
@@ -485,7 +505,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PI03}"
       },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
@@ -548,9 +568,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "exemplar": true,
           "expr": "avg(node_load5) /  count(count(node_cpu_seconds_total) by (cpu)) * 100",
           "format": "time_series",
@@ -566,6 +590,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Total used disk space",
       "fieldConfig": {
         "defaults": {
@@ -629,12 +657,12 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "min((node_filesystem_size_bytes{fstype=~\"ext4\"} - node_filesystem_free_bytes{fstype=~\"ext4\"})/ node_filesystem_size_bytes{fstype=~\"ext4\"})",
@@ -653,7 +681,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PI03}"
       },
       "description": "Hardware temperature",
       "fieldConfig": {
@@ -718,9 +746,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.4.1",
+      "pluginVersion": "8.4.6",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "exemplar": true,
           "expr": "node_thermal_zone_temp{type=\"cpu-thermal\"}",
           "format": "time_series",
@@ -736,6 +768,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -829,7 +865,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(container_cpu_system_seconds_total{id=\"/\"}[1m]))",
@@ -842,7 +878,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(process_cpu_seconds_total[$interval])) * 100 ",
@@ -855,7 +891,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(container_cpu_system_seconds_total{name=~\".+\"}[1m])) + sum(rate(container_cpu_system_seconds_total{id=\"/\"}[1m])) + sum(rate(process_cpu_seconds_total[1m]))",
@@ -868,7 +904,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\",job=\"$job\"}[$interval])) * 100)",
@@ -886,7 +922,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PI03}"
       },
       "fieldConfig": {
         "defaults": {
@@ -983,6 +1019,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "exemplar": true,
           "expr": "node_thermal_zone_temp{type=\"cpu-thermal\"}",
           "format": "time_series",
@@ -998,11 +1038,15 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "Disk space used",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "mode": "palette-classic"
           },
           "custom": {
             "axisLabel": "",
@@ -1010,7 +1054,7 @@
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 10,
-            "gradientMode": "scheme",
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1026,7 +1070,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1072,27 +1116,15 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
-          "expr": "node_filesystem_size_bytes{fstype=\"ext4\",mountpoint=\"/etc/resolv.conf\"} - node_filesystem_free_bytes{fstype=\"ext4\",mountpoint=\"/etc/resolv.conf\"}",
-          "hide": true,
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "HDD",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "exemplar": true,
-          "expr": "100 - ((node_filesystem_avail_bytes{fstype=\"ext4\",mountpoint=\"/etc/resolv.conf\"} * 100) / node_filesystem_size_bytes{fstype=\"ext4\",mountpoint=\"/etc/resolv.conf\"})",
+          "expr": "100 - ((node_filesystem_avail_bytes{} * 100) / node_filesystem_size_bytes{})",
           "hide": false,
+          "instant": false,
           "interval": "",
-          "legendFormat": "HDD",
-          "refId": "B"
+          "legendFormat": "",
+          "refId": "A"
         }
       ],
       "thresholds": [],
@@ -1100,6 +1132,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1196,7 +1232,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
@@ -1207,7 +1243,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "node_memory_MemTotal_bytes",
@@ -1224,6 +1260,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "The number (after merges) of I/O requests completed per second for the device",
       "fieldConfig": {
         "defaults": {
@@ -1622,7 +1662,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "irate(node_disk_read_bytes_total[1m])",
@@ -1635,7 +1675,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "- irate(node_disk_written_bytes_total[1m])",
@@ -1648,7 +1688,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "irate(node_disk_io_time_seconds_total[1m])",
@@ -1662,6 +1702,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1749,7 +1793,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",id=\"/\"}[$interval])) by (id)",
@@ -1764,7 +1808,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "- sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",id=\"/\"}[$interval])) by (id)",
@@ -1781,6 +1825,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1856,7 +1904,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$node\",name=~\".+\"}[$interval])) by (name)",
@@ -1871,7 +1919,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "- rate(container_network_receive_bytes_total{instance=~\"$node\",name=~\".+\"}[$interval])",
@@ -1888,6 +1936,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1963,7 +2015,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum(rate(container_network_transmit_bytes_total{instance=~\"$node\",name=~\".+\"}[$interval])) by (name)",
@@ -1978,7 +2030,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "rate(container_network_transmit_bytes_total{instance=~\"$node\",id=\"/\"}[$interval])",
@@ -1997,7 +2049,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PI03}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2072,6 +2124,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "exemplar": true,
           "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[$__range])) by (name) * 100",
           "format": "time_series",
@@ -2090,7 +2146,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${DS_PI03}"
       },
       "fieldConfig": {
         "defaults": {
@@ -2165,6 +2221,10 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "expr": "sum(container_memory_rss{name!=\"\"}) by (name)",
           "format": "time_series",
           "hide": false,
@@ -2175,6 +2235,10 @@
           "step": 240
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PI03}"
+          },
           "expr": "container_memory_usage_bytes{name=~\".+\"}",
           "format": "time_series",
           "hide": true,
@@ -2188,6 +2252,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2264,7 +2332,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "expr": "container_memory_usage_bytes{name!=\"\"}",
           "format": "time_series",
@@ -2278,7 +2346,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "expr": "container_spec_memory_limit_bytes{name!=\"\"}",
           "format": "time_series",
@@ -2294,6 +2362,10 @@
     },
     {
       "columns": [],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 8,
@@ -2395,7 +2467,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": false,
           "expr": "max(container_memory_usage_bytes{name!=\"\"}) by (name)",
@@ -2410,7 +2482,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": false,
           "expr": "max(container_memory_max_usage_bytes{name!=\"\"}-container_memory_usage_bytes{name!=\"\"})by (name)",
@@ -2424,7 +2496,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": false,
           "expr": "max(container_memory_max_usage_bytes{name!=\"\"}) by (name)",
@@ -2441,6 +2513,10 @@
       "type": "table-old"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2518,7 +2594,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$interval]))",
@@ -2532,6 +2608,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PI03}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2609,7 +2689,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${DS_PI03}"
           },
           "exemplar": true,
           "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$interval])) ",
@@ -2633,6 +2713,25 @@
   ],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "pi03",
+          "value": "pi03"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "Datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "auto": true,
         "auto_count": 50,
@@ -2735,6 +2834,10 @@
       },
       {
         "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PI03}"
+        },
         "definition": "label_values(container_cpu_user_seconds_total, job)",
         "hide": 0,
         "includeAll": false,
@@ -2750,8 +2853,7 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "type": "query",
-        "datasource": "${DS_PROMETHEUS}"
+        "type": "query"
       },
       {
         "current": {},
@@ -2771,7 +2873,7 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query",
-        "datasource": "${DS_PROMETHEUS}"
+        "datasource": "${DS_PI03}"
       }
     ]
   },
@@ -2806,7 +2908,7 @@
   },
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
-  "uid": "6qerhXmgk",
-  "version": 8,
+  "uid": "gSmIZQw7z",
+  "version": 13,
   "weekStart": ""
 }
