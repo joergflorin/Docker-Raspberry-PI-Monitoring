@@ -64,6 +64,24 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "expr": "Actions",
+        "hide": false,
+        "iconColor": "blue",
+        "name": "Actions",
+        "tagKeys": "",
+        "target": {
+          "limit": 100,
+          "matchAny": true,
+          "tags": [
+            "Actions"
+          ],
+          "type": "tags"
+        },
+        "useValueForTime": false
       }
     ]
   },
@@ -73,7 +91,7 @@
   "gnetId": 15120,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1653069383927,
+  "iteration": 1653070955552,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2984,6 +3002,6 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "gSmIZQw7z",
-  "version": 27,
+  "version": 33,
   "weekStart": ""
 }
