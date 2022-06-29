@@ -41,6 +41,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=90d'
     container_name: monitoring-prometheus
     expose:
       - 9090
