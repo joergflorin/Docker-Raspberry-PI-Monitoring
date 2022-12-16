@@ -36,6 +36,12 @@ services:
     networks:
       - monitoring
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9100 || exit 1"]
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
   prometheus:
     command:
@@ -57,6 +63,12 @@ services:
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9090 || exit 1"]
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 
 networks:
   monitoring:
