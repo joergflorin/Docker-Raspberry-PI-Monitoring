@@ -22,6 +22,8 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
+    environment:
+      - TZ=Europe/Berlin
 
   node-exporter:
     container_name: monitoring-node-exporter
@@ -36,6 +38,8 @@ services:
     networks:
       - monitoring
     restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
     healthcheck:
       test: ["CMD-SHELL", "nc -z localhost 9100 || exit 1"]
       interval: 60s
@@ -63,6 +67,8 @@ services:
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
+    environment:
+      - TZ=Europe/Berlin
     healthcheck:
       test: ["CMD-SHELL", "nc -z localhost 9090 || exit 1"]
       interval: 60s
